@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Login</title><link rel="stylesheet" href="style.css"></head>
+<body>
+  <h1>Login to Bajar</h1>
+  <form onsubmit="login(event)">
+    <input type="email" id="email" required><br>
+    <button type="submit">Login</button>
+  </form>
+  <script>
+    function login(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      localStorage.setItem('bajar_user_email', email);
+      alert("Logged in as " + email);
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

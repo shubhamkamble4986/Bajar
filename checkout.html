@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>Checkout</title><script src="https://checkout.razorpay.com/v1/checkout.js"></script><link rel="stylesheet" href="style.css"></head>
+<body>
+  <h1>Checkout</h1>
+  <p id="amountDisplay"></p>
+  <button onclick="payNow()">Pay Now</button>
+  <script>
+    const cart = JSON.parse(localStorage.getItem('bajar_cart')) || [];
+    const totalAmount = cart.reduce((sum, item) => sum + parseFloat(item.Price), 0);
+    document.getElementById('amountDisplay').innerText = `Total: ₹${totalAmount}`;
+    function payNow() {
+      const options = {
+        key: "rzp_test_YourKeyHere",
+        amount: totalAmount * 100,
+        currency: "INR",
+        name: "Bajar Store",
+        handler: function (response) {
+          localStorage.setItem('last_paid_cart', JSON.stringify(cart));
+          localStorage.removeItem('bajar_cart');
+          window.location.href = "thankyou.html";
+        }
+      };
+      const rzp = new Razorpay(options);
+      rzp.open();
+    }
+  </script>
+</body>
+</html>
